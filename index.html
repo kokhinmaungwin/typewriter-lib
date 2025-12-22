@@ -21,11 +21,6 @@
 <script>
   document.addEventListener("DOMContentLoaded", () => {
       new TypewriterTicker(document.getElementById("ticker"), {
-        items: [
-          { text: "Hello, bro! This is CDN-powered Typewriter Ticker." },
-          { text: "It supports links too!", url: "https://example.com" },
-          { text: "Pause on hover & cursor blinking included." }
-        ],
         source: {
         type: "rss",
         url: "https://yourdomainname/feeds/posts/default?alt=rss",
