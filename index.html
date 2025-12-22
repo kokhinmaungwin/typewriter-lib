@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Typewriter Ticker PRO - CDN Version</title>
+  <!-- CSS CDN -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/kokhinmaungwin/typewriter-lib/typewriter-lib.pro.css" />
+<style>
+  #ticker {
+    border: 1px solid #ccc;
+    padding: 8px 12px;
+    border-radius: 4px;
+    display: inline-block;
+  }
+</style>
+</head>
+<body>
+<h2 id="ticker" class="tt-ticker">Loading...</h2>
+
+<script src="https://cdn.jsdelivr.net/gh/kokhinmaungwin/typewriter-lib/typewriter-lib.pro.js"></script>
+<script>
+  new TypewriterTicker(document.getElementById("ticker"), {
+    source: {
+      type: "rss",
+      url: "https://www.khinmaungwin.ddns-ip.net/feeds/posts/default?alt=rss",
+      limit: 5
+    },
+    cursor: "|",
+    pauseOnHover: true,
+    typeSpeed: 90,
+    deleteSpeed: 40,
+    delay: 2500,
+    onComplete() {
+      console.log("Ticker finished");
+    }
+  });
+</script>
+</body>
+</html>
