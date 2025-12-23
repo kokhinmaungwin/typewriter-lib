@@ -94,6 +94,9 @@ ticker.destroy();
 
 ## ♿ Reduced Motion Support
 Automatically disables animation if user prefers reduced motion.
+
+---
+
 ## 📄 License
 MIT © Khin Maung Win
 
@@ -152,7 +155,10 @@ destroy()
 ### SEO Tip
 Always include static HTML inside `.tt-ticker`
 so content is visible even without JavaScript.
+
+---
+
 ## 🏁 Next Suggested Steps
-docs/index.html demo page
-GitHub Pages live demo
-NPM package (optional)
+- docs/index.html demo page
+- GitHub Pages live demo
+- NPM package (optional)
