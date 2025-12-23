@@ -1,6 +1,6 @@
 /*!
  * Typewriter Ticker PRO
- * Version: 1.4.0
+ * Version: 1.5.0
  * Author: Khin Maung Win
  * License: MIT
  */
