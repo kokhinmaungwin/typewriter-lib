@@ -3,31 +3,23 @@
 <head>
   <meta charset="UTF-8" />
   <title>Typewriter Ticker PRO - CDN Version</title>
+  <!-- CSS CDN -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/kokhinmaungwin/typewriter-lib/typewriter-lib.pro.css" />
-  <style>
-    #ticker {
-      border: 1px solid #ccc;
-      padding: 8px 12px;
-      border-radius: 4px;
-      display: inline-block;
-    }
-  </style>
 </head>
 <body>
+
   <h2 id="ticker" class="tt-ticker"></h2>
 
+  <!-- JS CDN -->
   <script src="https://cdn.jsdelivr.net/gh/kokhinmaungwin/typewriter-lib/typewriter-lib.pro.js"></script>
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      const tickerEl = document.getElementById("ticker");
-      tickerEl.textContent = "Loading..."; // Loading message initially
-      
-      new TypewriterTicker(tickerEl, {
-        source: {
-          type: "rss",
-          url: "https://www.khinmaungwin.ddns-ip.net/feeds/posts/default?alt=rss",
-          limit: 5
-        },
+      new TypewriterTicker(document.getElementById("ticker"), {
+        items: [
+          { text: "Hello, bro! This is CDN-powered Typewriter Ticker." },
+          { text: "It supports links too!", url: "https://example.com" },
+          { text: "Pause on hover & cursor blinking included." }
+        ],
         typeSpeed: 90,
         deleteSpeed: 50,
         delay: 2500,
@@ -35,11 +27,9 @@
         cursor: "|",
         cursorBlink: true,
         pauseOnHover: true,
-        onComplete() {
-          console.log("Ticker finished");
-        }
       });
     });
   </script>
+
 </body>
 </html>
