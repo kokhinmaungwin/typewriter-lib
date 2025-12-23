@@ -1,9 +1,3 @@
-/*!
- * Typewriter Ticker PRO
- * Version: 1.5.0
- * Author: Khin Maung Win
- * License: MIT
- */
 (function () {
   "use strict";
 
