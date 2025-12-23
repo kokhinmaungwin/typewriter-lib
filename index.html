@@ -13,12 +13,12 @@
   <!-- JS CDN -->
   <script src="https://cdn.jsdelivr.net/gh/kokhinmaungwin/typewriter-lib/typewriter-lib.pro.js"></script>
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      new TypewriterTicker(document.getElementById("ticker"), {
+    window.addEventListener("DOMContentLoaded", () => {
+      const ticker = new TypewriterTicker(document.getElementById("ticker"), {
         items: [
-          { text: "Hello, bro! This is CDN-powered Typewriter Ticker." },
-          { text: "It supports links too!", url: "https://example.com" },
-          { text: "Pause on hover & cursor blinking included." }
+          { text: "Hello, welcome to my blog!" },
+          { text: "Check out new posts every day", url: "https://yourblog.example.com" },
+          { text: "Follow me on social media" }
         ],
         typeSpeed: 90,
         deleteSpeed: 50,
