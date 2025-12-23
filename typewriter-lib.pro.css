@@ -20,6 +20,8 @@
   overflow: hidden;
   vertical-align: bottom;
   position: relative;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* Typed text */
@@ -109,10 +111,4 @@
 /* Paused visual state */
 .tt-ticker.paused {
   opacity: 0.75;
-}
-
-/* Font rendering polish */
-.tt-ticker {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
