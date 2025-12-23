@@ -20,28 +20,22 @@
 </head>
 <body>
 
-  <!-- ticker container (static fallback for SEO / no-JS) -->
+  <!-- ticker container -->
   <h2 id="ticker" class="tt-ticker tt-box">
-    <a href="https://www.khinmaungwin.ddns-ip.net">
-      Loading latest posts...
-    </a>
+    Loading latest posts...
   </h2>
 
   <!-- PRO JS -->
   <script src="https://cdn.jsdelivr.net/gh/kokhinmaungwin/typewriter-lib/typewriter-lib.pro.js"></script>
 
   <script>
-    // JSONP callback (GLOBAL)
-    window.ttFeedCallback = function (data) {
-      const entries = data.feed.entry || [];
-
-      const items = entries.slice(0, 5).map(e => ({
-        text: e.title.$t,
-        url: e.link.find(l => l.rel === "alternate")?.href || "#"
-      }));
-
+    document.addEventListener("DOMContentLoaded", () => {
       new TypewriterTicker(document.getElementById("ticker"), {
-        items,
+        source: {
+          type: "json",
+          url: "https://www.khinmaungwin.ddns-ip.net/feeds/posts/default?alt=json",
+          limit: 5
+        },
 
         /* animation */
         typeSpeed: 90,
@@ -56,22 +50,19 @@
         /* UX */
         pauseOnHover: true,
 
-        /* fallback if feed empty */
+        /* fallback if feed fails */
         fallback: [
           {
             text: "Welcome to my blog",
             url: "https://www.khinmaungwin.ddns-ip.net"
+          },
+          {
+            text: "Read latest tutorials",
+            url: "https://www.khinmaungwin.ddns-ip.net"
           }
         ]
       });
-    };
-  </script>
-
-  <!-- Blogger JSONP feed (CORS SAFE) -->
-  <script
-    src="https://www.khinmaungwin.ddns-ip.net/feeds/posts/default
-    ?alt=json-in-script
-    &callback=ttFeedCallback">
+    });
   </script>
 
 </body>
