@@ -2,31 +2,55 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Typewriter Ticker PRO - CDN Version</title>
-  <!-- CSS CDN -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/kokhinmaungwin/typewriter-lib/typewriter-lib.pro.css" />
+  <title>Typewriter Ticker PRO - CDN Demo</title>
+
+  <!-- PRO CSS -->
+  <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/gh/kokhinmaungwin/typewriter-lib/typewriter-lib.pro.css" />
 </head>
 <body>
 
-  <h2 id="ticker" class="tt-ticker"></h2>
+  <!-- Ticker -->
+  <h2
+    id="ticker"
+    class="tt-ticker pause-on-hover"
+    data-size="md"
+  >
+    Loading latest updates...
+  </h2>
 
-  <!-- JS CDN -->
+  <!-- PRO JS -->
   <script src="https://cdn.jsdelivr.net/gh/kokhinmaungwin/typewriter-lib/typewriter-lib.pro.js"></script>
   <script>
     window.addEventListener("DOMContentLoaded", () => {
-      const ticker = new TypewriterTicker(document.getElementById("ticker"), {
+      new TypewriterTicker(document.getElementById("ticker"), {
         items: [
           { text: "Hello, welcome to my blog!" },
-          { text: "Check out new posts every day", url: "https://yourblog.example.com" },
+          {
+            text: "Check out new posts every day",
+            url: "https://yourblog.example.com"
+          },
           { text: "Follow me on social media" }
         ],
+
+        /* animation */
         typeSpeed: 90,
         deleteSpeed: 50,
         delay: 2500,
         loop: true,
+
+        /* cursor */
         cursor: "|",
         cursorBlink: true,
+
+        /* UX */
         pauseOnHover: true,
+
+        /* fallback */
+        fallback: [
+          { text: "Welcome to my website" },
+          { text: "Enjoy reading my posts" }
+        ]
       });
     });
   </script>
