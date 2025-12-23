@@ -20,19 +20,24 @@
         delay: 2000,
         loop: true,
         loopCount: Infinity,
+        startIndex: 0,
+        maxLength: null,
+        linkTarget: "_blank",
         cursor: "|",
         cursorBlink: true,
         pauseOnHover: true,
         humanize: true,
         pauseWhenHidden: true,
         respectReducedMotion: true,
+        silentFail: true,
         source: null,
+        beforeType: null,
         onTypeStart: null,
         onTypeEnd: null,
         onComplete: null
       }, options);
 
-      this.index = 0;
+      this.index = this.opts.startIndex || 0;
       this.charIndex = 0;
       this.isDeleting = false;
       this.loopsDone = 0;
@@ -73,10 +78,11 @@
     }
 
     async _loadSource() {
-      if (this.opts.source.type === "json") {
-        await this._loadJSON();
-      } else if (this.opts.source.type === "rss") {
-        await this._loadRSS();
+      try {
+        if (this.opts.source.type === "json") await this._loadJSON();
+        if (this.opts.source.type === "rss") await this._loadRSS();
+      } catch (e) {
+        if (!this.opts.silentFail) console.warn(e);
       }
     }
 
@@ -84,7 +90,7 @@
       try {
         const res = await fetch(this.opts.source.url);
         const data = await res.json();
-        const entries = data.feed.entry || [];
+        const entries = data.feed?.entry || [];
 
         this.opts.items = entries
           .slice(0, this.opts.source.limit || 5)
@@ -92,8 +98,9 @@
             text: e.title.$t,
             url: e.link.find(l => l.rel === "alternate")?.href || ""
           }));
-      } catch (e) {
-        console.warn("JSON load failed, using fallback");
+      } catch {
+        if (!this.opts.silentFail)
+          console.warn("JSON load failed, using fallback");
       }
     }
 
@@ -110,16 +117,22 @@
             url: i.querySelector("link")?.textContent || ""
           }));
       } catch {
-        console.warn("RSS load failed, using fallback");
+        if (!this.opts.silentFail)
+          console.warn("RSS load failed, using fallback");
       }
     }
 
     _addCursor() {
       if (!this.opts.cursor) return;
 
+      this.textNode = document.createElement("span");
       this.cursorEl = document.createElement("span");
+
       this.cursorEl.className = "tt-cursor";
       this.cursorEl.textContent = this.opts.cursor;
+
+      this.el.innerHTML = "";
+      this.el.appendChild(this.textNode);
       this.el.appendChild(this.cursorEl);
 
       if (this.opts.cursorBlink && !document.getElementById("tt-style")) {
@@ -130,10 +143,23 @@
             0%,50%,100%{opacity:1}
             25%,75%{opacity:0}
           }
-          .tt-cursor { animation: tt-blink 1s infinite; margin-left:4px; user-select:none; }
-        `;
+          .tt-cursor {
+            animation: tt-blink 1s infinite;
+            margin-left:4px;
+            user-select:none;
+          }`;
         document.head.appendChild(style);
       }
+    }
+
+    _prepareText(text) {
+      if (this.opts.beforeType) {
+        text = this.opts.beforeType(text, this.index);
+      }
+      if (this.opts.maxLength && text.length > this.opts.maxLength) {
+        text = text.slice(0, this.opts.maxLength) + "...";
+      }
+      return text;
     }
 
     _tick() {
@@ -143,27 +169,25 @@
       const item = this.opts.items[this.index];
       if (!item) return;
 
-      const text = item.text;
-      let output;
+      const text = this._prepareText(item.text);
 
       if (!this.isDeleting) {
         if (this.charIndex === 0 && this.opts.onTypeStart)
           this.opts.onTypeStart(text);
-        output = text.slice(0, ++this.charIndex);
-      } else {
-        output = text.slice(0, --this.charIndex);
-      }
 
-      if (this.el.firstChild) {
-        this.el.firstChild.textContent = output;
+        this.textNode.textContent = text.slice(0, ++this.charIndex);
       } else {
-        this.el.textContent = output;
+        this.textNode.textContent = text.slice(0, --this.charIndex);
       }
 
       let speed = this.isDeleting ? this.opts.deleteSpeed : this.opts.typeSpeed;
       if (this.opts.humanize) speed += Math.random() * 40;
 
       if (!this.isDeleting && this.charIndex === text.length) {
+        if (item.url) {
+          this.textNode.innerHTML =
+            `<a href="${item.url}" target="${this.opts.linkTarget}" rel="noopener">${text}</a>`;
+        }
         if (this.opts.onTypeEnd) this.opts.onTypeEnd(text);
         speed = this.opts.delay;
         this.isDeleting = true;
@@ -180,7 +204,7 @@
     _renderStatic() {
       const item = this.opts.items[0] || this.opts.fallback[0];
       this.el.innerHTML = item.url
-        ? `<a href="${item.url}" target="_blank" rel="noopener">${item.text}</a>`
+        ? `<a href="${item.url}" target="${this.opts.linkTarget}">${item.text}</a>`
         : item.text;
     }
 
@@ -199,5 +223,4 @@
   }
 
   window.TypewriterTicker = TypewriterTicker;
-
 })();
