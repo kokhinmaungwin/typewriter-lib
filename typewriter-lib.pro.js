@@ -141,7 +141,12 @@
             animation: tt-blink 1s infinite;
             margin-left:4px;
             user-select:none;
-          }`;
+          }
+          .tt-cursor.paused {
+            animation-play-state: paused;
+            opacity: 0.4;
+          }
+        `;
         document.head.appendChild(style);
       }
     }
@@ -202,13 +207,23 @@
         : item.text;
     }
 
-    pause() { this.paused = true; }
-    resume() { this.paused = false; }
+    pause() {
+      this.paused = true;
+      if (this.cursorEl) this.cursorEl.classList.add("paused");
+    }
+
+    resume() {
+      this.paused = false;
+      if (this.cursorEl) this.cursorEl.classList.remove("paused");
+      this._tick();
+    }
+
     next() {
       this.charIndex = 0;
       this.isDeleting = false;
       this.index = (this.index + 1) % this.opts.items.length;
     }
+
     destroy() {
       this.destroyed = true;
       this.el.innerHTML = "";
