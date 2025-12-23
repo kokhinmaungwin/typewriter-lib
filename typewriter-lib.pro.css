@@ -97,3 +97,29 @@
   }
 }
 
+/* Size variants */
+.tt-ticker[data-size="sm"] { font-size: 1.2rem; }
+.tt-ticker[data-size="md"] { font-size: 1.6rem; }
+.tt-ticker[data-size="lg"] { font-size: 2rem; }
+
+/* Multiline support (future-ready) */
+.tt-ticker.multiline {
+  white-space: normal;
+}
+
+/* Accessibility focus */
+.tt-ticker a:focus-visible {
+  outline: 2px dashed var(--tt-link-color);
+  outline-offset: 3px;
+}
+
+/* Paused visual state */
+.tt-ticker.paused {
+  opacity: 0.75;
+}
+
+/* Font rendering polish */
+.tt-ticker {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
