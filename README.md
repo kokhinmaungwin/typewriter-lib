@@ -24,7 +24,6 @@ Perfect for blogs, GitHub Pages, PWAs, and static websites.
 
 ## 🚀 Quick Start (CDN)
 
-### HTML
 ```html
 <link rel="stylesheet"
   href="https://cdn.jsdelivr.net/gh/kokhinmaungwin/typewriter-lib/typewriter-lib.pro.css" />
@@ -69,42 +68,16 @@ source: {
 ---
 
 ## ⚙️ Options
-Option
-Type
-Default
-Description
-items
-Array
-[]
-Static items
-fallback
-Array
-Loading…
-Used if feed fails
-typeSpeed
-Number
-80
-Typing speed
-deleteSpeed
-Number
-40
-Deleting speed
-delay
-Number
-2000
-Delay before delete
-loop
-Boolean
-true
-Loop animation
-cursor
-String
-|
-Cursor character
-pauseOnHover
-Boolean
-true
-Pause on hover
+|Option |Type |Default |Description|
+|-------|-----|--------|-----------|
+|items  |Array|[]      |Static items|
+|fallback|Array|Loading…|Used if feed fails|
+|typeSpeed|Number|80|Typing speed|
+|deleteSpeed|Number|40|Deleting speed|
+|delay|Number|2000|Delay before delete|
+|loop|Boolean|true|Loop animation|
+|cursor|String|||Cursor character|
+|pauseOnHover|Boolean|true|Pause on hover|
 
 ---
 
@@ -126,9 +99,9 @@ MIT © Khin Maung Win
 
 ---
 
-# 📗 Docs Structure (docs/index.md)
+## 📗 Docs Structure (docs/index.md)
 
-```md
+
 # Typewriter Ticker PRO – Documentation
 
 ## 1. Installation
@@ -145,12 +118,13 @@ source: {
   type: "json",
   url: "https://yourblog.com/feeds/posts/default?alt=json"
 }
+```
 ## 4. Fallback Content
-Copy code
-Js
+```js
 fallback: [
   { text: "Welcome to my blog", url: "/blog" }
 ]
+```
 ## 5. Styling (PRO CSS)
 .tt-ticker
 .tt-cursor
@@ -171,7 +145,6 @@ v1.4.0 JSON + fallback + API
 
 ## 🧠 Pro Tips
 
-```md
 ### SEO Tip
 Always include static HTML inside `.tt-ticker`
 so content is visible even without JavaScript.
