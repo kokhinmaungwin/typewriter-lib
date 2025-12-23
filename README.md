@@ -26,13 +26,13 @@ Perfect for blogs, GitHub Pages, PWAs, and static websites.
 
 ```html
 <link rel="stylesheet"
-  href="https://cdn.jsdelivr.net/gh/kokhinmaungwin/typewriter-lib@1.5.0/typewriter-lib.pro.css" />
+  href="https://cdn.jsdelivr.net/gh/kokhinmaungwin/typewriter-lib@v1.6.0/typewriter-lib.pro.css" />
 
 <h2 id="ticker" class="tt-ticker">
   <a href="/blog">Latest blog posts</a>
 </h2>
 
-<script src="https://cdn.jsdelivr.net/gh/kokhinmaungwin/typewriter-lib@1.5.0/typewriter-lib.pro.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/kokhinmaungwin/typewriter-lib@v1.6.0/typewriter-lib.pro.js"></script>
 <script>
   new TypewriterTicker(document.getElementById("ticker"), {
     source: {
