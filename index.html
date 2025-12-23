@@ -5,59 +5,73 @@
   <title>TypewriterTicker PRO</title>
 
   <!-- PRO CSS -->
-  <title>Typewriter Ticker PRO - CDN Version</title>
+  <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/gh/kokhinmaungwin/typewriter-lib/typewriter-lib.pro.css" />
 
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/kokhinmaungwin/typewriter-lib/typewriter-lib.pro.css" />
   <style>
-    #ticker {
-      width: 100%;
+    .tt-box {
       border: 1px solid #ccc;
-      padding: 8px 12px;
-      border-radius: 4px;
+      padding: 10px 14px;
+      border-radius: 6px;
       display: inline-block;
+      max-width: 100%;
     }
   </style>
 </head>
 <body>
-<h2 id="ticker" class="tt-ticker">loading..</h2>
+
+  <!-- ticker container (static fallback for SEO / no-JS) -->
+  <h2 id="ticker" class="tt-ticker tt-box">
+    <a href="https://www.khinmaungwin.ddns-ip.net">
+      Loading latest posts...
+    </a>
+  </h2>
+
+  <!-- PRO JS -->
   <script src="https://cdn.jsdelivr.net/gh/kokhinmaungwin/typewriter-lib/typewriter-lib.pro.js"></script>
+
   <script>
-    <script src="typewriter-ticker.js"></script>
-  <script>
-    (async function () {
+    // JSONP callback (GLOBAL)
+    window.ttFeedCallback = function (data) {
+      const entries = data.feed.entry || [];
 
-  const RSS_URL = "https://ukhinmaungwin.blogspot.com/feeds/posts/default?alt=rss";
-  const MAX_ITEMS = 5;
-
-  try {
-    const res = await fetch(RSS_URL);
-    const text = await res.text();
-
-    const xml = new DOMParser().parseFromString(text, "text/xml");
-    const items = [...xml.querySelectorAll("item")]
-      .slice(0, MAX_ITEMS)
-      .map(item => ({
-        text: item.querySelector("title").textContent,
-        url: item.querySelector("link").textContent
+      const items = entries.slice(0, 5).map(e => ({
+        text: e.title.$t,
+        url: e.link.find(l => l.rel === "alternate")?.href || "#"
       }));
 
-    new TypewriterTicker(
-      document.getElementById("ticker"),
-      {
+      new TypewriterTicker(document.getElementById("ticker"), {
         items,
+
+        /* animation */
         typeSpeed: 90,
-        deleteSpeed: 40,
-        delay: 2500
-      }
-    );
+        deleteSpeed: 45,
+        delay: 2200,
+        loop: true,
 
-  } catch (e) {
-    document.getElementById("ticker").textContent =
-      "Failed to load blog posts";
-    console.error(e);
-  }
+        /* cursor */
+        cursor: "|",
+        cursorBlink: true,
 
-})();
+        /* UX */
+        pauseOnHover: true,
+
+        /* fallback if feed empty */
+        fallback: [
+          {
+            text: "Welcome to my blog",
+            url: "https://www.khinmaungwin.ddns-ip.net"
+          }
+        ]
+      });
+    };
+  </script>
+
+  <!-- Blogger JSONP feed (CORS SAFE) -->
+  <script
+    src="https://www.khinmaungwin.ddns-ip.net/feeds/posts/default
+    ?alt=json-in-script
+    &callback=ttFeedCallback">
   </script>
 
 </body>
