@@ -5,62 +5,43 @@
   <title>TypewriterTicker PRO</title>
 
   <!-- PRO CSS -->
-  <link rel="stylesheet"
-    href="https://cdn.jsdelivr.net/gh/kokhinmaungwin/typewriter-lib/typewriter-lib.pro.css" />
+  <title>Typewriter Ticker PRO - CDN Version</title>
 
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/kokhinmaungwin/typewriter-lib/typewriter-lib.pro.css" />
   <style>
-    .tt-box {
+    #ticker {
+      width: 100%;
       border: 1px solid #ccc;
-      padding: 10px 14px;
-      border-radius: 6px;
+      padding: 8px 12px;
+      border-radius: 4px;
       display: inline-block;
-      max-width: 100%;
     }
   </style>
 </head>
 <body>
-
-  <!-- ticker container -->
-  <h2 id="ticker" class="tt-ticker tt-box">
-    Loading latest posts...
-  </h2>
-
-  <!-- PRO JS -->
+<h2 id="ticker" class="tt-ticker"></h2>
   <script src="https://cdn.jsdelivr.net/gh/kokhinmaungwin/typewriter-lib/typewriter-lib.pro.js"></script>
-
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      new TypewriterTicker(document.getElementById("ticker"), {
+      const tickerEl = document.getElementById("ticker");
+      tickerEl.textContent = "Loading..."; // Loading message initially
+      
+      new TypewriterTicker(tickerEl, {
         source: {
-          type: "json",
-          url: "https://www.khinmaungwin.ddns-ip.net/feeds/posts/default?alt=json",
+          type: "rss",
+          url: "https://www.khinmaungwin.ddns-ip.net/feeds/posts/default?alt=rss",
           limit: 5
         },
-
-        /* animation */
         typeSpeed: 90,
-        deleteSpeed: 45,
-        delay: 2200,
+        deleteSpeed: 50,
+        delay: 2500,
         loop: true,
-
-        /* cursor */
         cursor: "|",
         cursorBlink: true,
-
-        /* UX */
         pauseOnHover: true,
-
-        /* fallback if feed fails */
-        fallback: [
-          {
-            text: "Welcome to my blog",
-            url: "https://www.khinmaungwin.ddns-ip.net"
-          },
-          {
-            text: "Read latest tutorials",
-            url: "https://www.khinmaungwin.ddns-ip.net"
-          }
-        ]
+        onComplete() {
+          console.log("Ticker finished");
+        }
       });
     });
   </script>
