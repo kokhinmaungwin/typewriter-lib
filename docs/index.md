@@ -43,6 +43,8 @@ destroy()
 ## 8. Version History
 - v1.3.0 Initial PRO
 - v1.4.0 JSON + fallback + API
+- v1.5.0
+- v1.6.0
 
 ---
 
