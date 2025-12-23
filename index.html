@@ -22,28 +22,40 @@
 <h2 id="ticker" class="tt-ticker"></h2>
   <script src="https://cdn.jsdelivr.net/gh/kokhinmaungwin/typewriter-lib/typewriter-lib.pro.js"></script>
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const tickerEl = document.getElementById("ticker");
-      tickerEl.textContent = "Loading..."; // Loading message initially
-      
-      new TypewriterTicker(tickerEl, {
-        source: {
-          type: "rss",
-          url: "https://www.khinmaungwin.ddns-ip.net/feeds/posts/default?alt=rss",
-          limit: 5
-        },
+    (async function () {
+
+  const RSS_URL = "https://www.khinmaungwin.dpdns.org/feeds/posts/default?alt=rss";
+  const MAX_ITEMS = 5;
+
+  try {
+    const res = await fetch(RSS_URL);
+    const text = await res.text();
+
+    const xml = new DOMParser().parseFromString(text, "text/xml");
+    const items = [...xml.querySelectorAll("item")]
+      .slice(0, MAX_ITEMS)
+      .map(item => ({
+        text: item.querySelector("title").textContent,
+        url: item.querySelector("link").textContent
+      }));
+
+    new TypewriterTicker(
+      document.getElementById("ticker"),
+      {
+        items,
         typeSpeed: 90,
-        deleteSpeed: 50,
-        delay: 2500,
-        loop: true,
-        cursor: "|",
-        cursorBlink: true,
-        pauseOnHover: true,
-        onComplete() {
-          console.log("Ticker finished");
-        }
-      });
-    });
+        deleteSpeed: 40,
+        delay: 2500
+      }
+    );
+
+  } catch (e) {
+    document.getElementById("ticker").textContent =
+      "Failed to load blog posts";
+    console.error(e);
+  }
+
+})();
   </script>
 
 </body>
