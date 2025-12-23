@@ -76,7 +76,7 @@ source: {
 |deleteSpeed|Number|40|Deleting speed|
 |delay|Number|2000|Delay before delete|
 |loop|Boolean|true|Loop animation|
-|cursor|String|`|`|Cursor character|
+|cursor|String|\||Cursor character|
 |pauseOnHover|Boolean|true|Pause on hover|
 
 ---
