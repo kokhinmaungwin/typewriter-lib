@@ -21,49 +21,26 @@
 <body>
 
   <!-- ticker container -->
-  <h2 id="ticker" class="tt-ticker tt-box">
-    Loading latest posts...
-  </h2>
+  <h2 id="ticker">Loading...</h2>
 
-  <!-- PRO JS -->
-  <script src="https://cdn.jsdelivr.net/gh/kokhinmaungwin/typewriter-lib/typewriter-lib.pro.js"></script>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      new TypewriterTicker(document.getElementById("ticker"), {
-        source: {
-          type: "json",
-          url: "https://www.khinmaungwin.ddns-ip.net/feeds/posts/default?alt=json",
-          limit: 5
-        },
-
-        /* animation */
-        typeSpeed: 90,
-        deleteSpeed: 45,
-        delay: 2200,
-        loop: true,
-
-        /* cursor */
-        cursor: "|",
-        cursorBlink: true,
-
-        /* UX */
-        pauseOnHover: true,
-
-        /* fallback if feed fails */
-        fallback: [
-          {
-            text: "Welcome to my blog",
-            url: "https://www.khinmaungwin.ddns-ip.net"
-          },
-          {
-            text: "Read latest tutorials",
-            url: "https://www.khinmaungwin.ddns-ip.net"
-          }
-        ]
-      });
-    });
-  </script>
+<script src="typewriter-ticker.pro.js"></script>
+<script>
+new TypewriterTicker(document.getElementById("ticker"), {
+  source: {
+    type: "json",
+    url: "https://www.khinmaungwin.dpdns.org/feeds/posts/default?alt=json",
+    limit: 5
+  },
+  cursor: "|",
+  pauseOnHover: true,
+  typeSpeed: 90,
+  deleteSpeed: 40,
+  delay: 2500,
+  onComplete() {
+    console.log("Ticker finished");
+  }
+});
+</script>
 
 </body>
 </html>
