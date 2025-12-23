@@ -1,7 +1,7 @@
 ## 📗 Docs Structure
 
 
-# Typewriter Ticker PRO – Documentation
+- Typewriter Ticker PRO – Documentation
 
 ## 1. Installation
 - CDN
@@ -48,7 +48,7 @@ destroy()
 
 ## 🧠 Pro Tips
 
-### SEO Tip
+-SEO Tip
 Always include static HTML inside `.tt-ticker`
 so content is visible even without JavaScript.
 
